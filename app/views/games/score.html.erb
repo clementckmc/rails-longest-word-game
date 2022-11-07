@@ -12,4 +12,8 @@
     <% end %>
       <p>Your grand score: <strong><%= @grand_score.floor(2) %></strong></p>
     <%= link_to "Play again", new_path, class: "btn btn-primary btn-lg" %>
+    <br><br>
+    <form action="/new">
+      <input type="submit" class="btn btn-success btn-lg" value="reset" name="reset">
+    </form>
   </div>

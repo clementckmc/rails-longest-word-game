@@ -6,7 +6,7 @@ class GamesController < ApplicationController
     # get grid size
     grid_size = rand(5..10)
     @letters = grid_size.times.map { ('A'..'Z').to_a[rand(0...26)] }
-    session[:score] = 0 if session[:score].nil?
+    session[:score] = 0 if session[:score].nil? || params[:reset]
   end
 
   def score
@@ -16,7 +16,7 @@ class GamesController < ApplicationController
     if !word["found"]
       @message = "Sorry but #{params[:attempt].upcase} does not seem to be a valid English word"
     elsif !check_grid(params[:grid].chars, word["word"].chars)
-      @message = "Sorry but #{params[:attempt].upcase} can't be built out of #{params[:grid].split(",")}"
+      @message = "Sorry but #{params[:attempt].upcase} can't be built out of #{params[:grid].split.join}"
     else
       @message = "Well Done!"
       @score = 30 - (Time.now - Time.parse(params[:start_time])) + params[:attempt].size # add time
