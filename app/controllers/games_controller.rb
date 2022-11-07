@@ -4,8 +4,8 @@ require 'json'
 class GamesController < ApplicationController
   def new
     # get grid size
-    grid_size = rand(5..10)
-    @letters = grid_size.times.map { ('A'..'Z').to_a[rand(0...26)] }
+    grid_size = rand(4..10)
+    @letters = grid_size.times.map { ('A'..'Z').to_a[rand(0...26)] }.unshift(%w[A E I O U][rand(0...5)]) # at least 1 vovel
     session[:score] = 0 if session[:score].nil? || params[:reset]
   end
 
@@ -19,7 +19,7 @@ class GamesController < ApplicationController
       @message = "Sorry but #{params[:attempt].upcase} can't be built out of #{params[:grid].split.join}"
     else
       @message = "Well Done!"
-      @score = 30 - (Time.now - Time.parse(params[:start_time])) + params[:attempt].size # add time
+      @score = 30 - (Time.now - Time.parse(params[:start_time])) + params[:attempt].size
       session[:score] += @score
     end
     @grand_score = session[:score]
