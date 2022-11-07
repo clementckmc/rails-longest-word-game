@@ -1,0 +1,25 @@
+<div class="container">
+
+  <h1>New game</h1>
+
+<div class="grid">
+  <ul class="list-group list-group-horizontal">
+    <% @letters.each do |letter| %>
+      <li class="list-group-item"><%= letter %></li>
+    <% end %>
+  </ul>
+</div>
+
+  <form action="/score" method="post" data-turbo="false">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag :grid, @letters %>
+    <%= hidden_field_tag :start_time, Time.now %>
+    <div class="row">
+      <div class="input-group mb-3" style="max-width:500px">
+        <input type="text" class="form-control" placeholder="Your attempt" aria-label="attempt" aria-describedby="attempt" name="attempt">
+        <button class="btn btn-info btn-lg" type="submit" id="attempt">Play</button>
+      </div>
+    </div>
+  </form>
+
+</div>
