@@ -6,6 +6,7 @@ class GamesController < ApplicationController
     # get grid size
     grid_size = rand(5..10)
     @letters = grid_size.times.map { ('A'..'Z').to_a[rand(0...26)] }
+    session[:score] = 0 if session[:score].nil?
   end
 
   def score
@@ -19,7 +20,9 @@ class GamesController < ApplicationController
     else
       @message = "Well Done!"
       @score = 30 - (Time.now - Time.parse(params[:start_time])) + params[:attempt].size # add time
+      session[:score] += @score
     end
+    @grand_score = session[:score]
   end
 
   private
@@ -37,14 +40,4 @@ class GamesController < ApplicationController
     no_overuse = true if word.join == ""
     in_the_grid && no_overuse
   end
-
-  def create
-    if user = User.authenticate(params[:username], params[:password])
-      # Save the user ID in the session so it can be used in
-      # subsequent requests
-      session[:current_user_id] = user.id
-      redirect_to root_url
-    end
-  end
-
 end

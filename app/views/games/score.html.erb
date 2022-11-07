@@ -1,7 +1,15 @@
-<h1>Result</h1>
-<p><%= @message %></p>
-<% if @score %>
-  <p>Your score this round: <%= @score %></p>
-<% end %>
-  <p>Your grand score: </p>
-<%= link_to "Play again", new_path %>
+  <div class="container">
+    <h1>Result</h1>
+    <% if @score %>
+      <div class="alert alert-success" role="alert">
+        <p><%= @message %></p>
+        <p>Your score this round: <strong><%= @score.floor(2) %></strong></p>
+     </div>
+    <% else %>
+      <div class="alert alert-warning" role="alert">
+        <p><%= @message %></p>
+      </div>
+    <% end %>
+      <p>Your grand score: <strong><%= @grand_score.floor(2) %></strong></p>
+    <%= link_to "Play again", new_path, class: "btn btn-primary btn-lg" %>
+  </div>
